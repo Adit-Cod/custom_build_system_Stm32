@@ -37,8 +37,8 @@
 #define GPIOA_OFFSET                           (0x0000U)
 #define GPIOAPERIPHERAL_BASE                   (AHB1PERIPHERAL_BASE + GPIOA_OFFSET)
 #define RCC_OFFSET                             (0x3800UL)
-#define RCCPERIPHERAL_BASE                     (AHB1PERIPHERAL_BASE + RCC_OFFSET)
-#define AHB1ENR_OFFSET                         (0x30UL)
+#define RCCPERIPHERAL_BASE					   (AHB1PERIPHERAL_BASE + RCC_OFFSET)
+#define AHB1ENR_OFFSET						   (0x30UL)
 #define RCC_AHB1ENR                            (*(volatile unsigned int *)(RCCPERIPHERAL_BASE + AHB1ENR_OFFSET))
 /* Use this MACRO to enable clock access to GPIOA in RCCAHB1ENR bit 0 */
 #define GPIOAEN                                (1U<<0)
