@@ -1,24 +1,14 @@
-12:56:13 **** Incremental Build of configuration Debug for project 1_led_toggle ****
+21:53:50 **** Incremental Build of configuration Debug for project 2_led_toggle_Struct ****
 make -j12 all 
-arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -c -I../Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
-arm-none-eabi-gcc -o "1_led_toggle.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Ad_Docs\Embedded Systems\custom_build_system_Stm32\custom_build_system_Stm32\baremetal_workspace\1_led_toggle\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="1_led_toggle.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: 1_led_toggle.elf
- 
-arm-none-eabi-size   1_led_toggle.elf 
-arm-none-eabi-objdump -h -S  1_led_toggle.elf  > "1_led_toggle.list"
+arm-none-eabi-size   2_led_toggle_Struct.elf 
    text	   data	    bss	    dec	    hex	filename
-    788	      8	   1568	   2364	    93c	1_led_toggle.elf
-arm-none-eabi-objcopy  -O binary  1_led_toggle.elf  "1_led_toggle.bin"
+    784	      8	   1568	   2360	    938	2_led_toggle_Struct.elf
 Finished building: default.size.stdout
-Finished building: 1_led_toggle.list
  
-Finished building: 1_led_toggle.bin
- 
- 
-12:56:54 **** Incremental Build of configuration Debug for project 1_led_toggle ****
+21:54:11 **** Incremental Build of configuration Debug for project 2_led_toggle_Struct ****
 make -j12 all 
-arm-none-eabi-size   1_led_toggle.elf 
+arm-none-eabi-size   2_led_toggle_Struct.elf 
    text	   data	    bss	    dec	    hex	filename
-    788	      8	   1568	   2364	    93c	1_led_toggle.elf
+    784	      8	   1568	   2360	    938	2_led_toggle_Struct.elf
 Finished building: default.size.stdout
  

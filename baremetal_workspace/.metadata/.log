@@ -114,3 +114,21 @@ java.lang.IllegalStateException: Call stack for thread main
 	at app//org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:653)
 	at app//org.eclipse.equinox.launcher.Main.basicRun(Main.java:590)
 	at app//org.eclipse.equinox.launcher.Main.run(Main.java:1461)
+
+!ENTRY org.eclipse.cdt.core 1 0 2022-12-31 13:22:15.368
+!MESSAGE Indexed '2_led_toggle_Struct' (3 sources, 58 headers) in 0.269 sec: 2,314 declarations; 3,120 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.037%)
+!SESSION 2022-12-31 20:42:33.773 -----------------------------------------------
+eclipse.buildId=Version 1.8.0
+java.version=11.0.11
+java.vendor=AdoptOpenJDK
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2022-12-31 20:44:53.256
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2022-12-31 20:44:53.303
+!MESSAGE Log4j initialized with config file C:\Ad_Docs\Embedded Systems\custom_build_system_Stm32\custom_build_system_Stm32\baremetal_workspace\.metadata\.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2022-12-31 20:44:58.682
+!MESSAGE Started RMI Server, listening on port 41337
