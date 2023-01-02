@@ -1,0 +1,2 @@
+arm-none-eabi-gcc -S -mcpu=cortex-m4 -mthumb main.c -o main.s --> Generate the assembly code. 
+arm-none-eabi-gcc -c -mcpu=cortex-m4 -mthumb main.c -o main.o --> Generate the object file

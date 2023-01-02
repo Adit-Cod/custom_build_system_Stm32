@@ -23,7 +23,6 @@
 /*------ standard includes -------*/
 #include "Stdio.h"
 #include "string.h"
-#include "stdint.h"
 /*------ project includes --------*/
 
 /*------ module includes --------*/

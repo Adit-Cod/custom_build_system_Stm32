@@ -1,5 +1,5 @@
 /******************************************************************************
-*****     	BARE METAL USING STRUCT									      *****
+*****     															      *****
 ******************************************************************************/
 /*!
 ***     \file       main.c
@@ -23,7 +23,6 @@
 /*------ standard includes -------*/
 #include "Stdio.h"
 #include "string.h"
-#include "stdint.h"
 /*------ project includes --------*/
 
 /*------ module includes --------*/
@@ -49,35 +48,10 @@
 #define GPIOA_ODR                              (*(volatile unsigned int *)(GPIOAPERIPHERAL_BASE + GPIOAODR_OFFSET))
 #define PIN5                                   (1U<<5)
 #define LED_PIN                                PIN5
-#define __IO                                   volatile
+
 /*=============================================================================
 =======                       CONSTANTS  &  TYPES                       =======
 =============================================================================*/
-
-typedef struct
-{
-
-	__IO uint32_t MODER;
-	__IO uint32_t OTYPER;
-	__IO uint32_t OSPEEDR;
-	__IO uint32_t PUPDR;
-	__IO uint32_t IDR;
-	__IO uint32_t ODR;
-	__IO uint32_t BSRR;
-	__IO uint32_t LCKR;
-	__IO uint32_t AFR[2];
-}GPIO_TypeDef;
-
-typedef struct
-{
-	/* Other structure elements are not mentioned here as only AHB1ENR is accessed. Populate this structure
-	 * as and when application demands it! */
-	__IO uint32_t DUMMY[12];
-	__IO uint32_t AHB1ENR;
-}RCC_TypeDef;
-
-#define RCC    ((RCC_TypeDef *)RCCPERIPHERAL_BASE)
-#define GPIOA  ((GPIO_TypeDef*)GPIOAPERIPHERAL_BASE)
 
 /*=============================================================================
 =======                       PRIVATE FUNCTION DECLARATIONS             =======
@@ -90,10 +64,10 @@ typedef struct
 int main()
 {
 	/* Set clock access to GPIOA to trigger LED */
-	RCC->AHB1ENR |= GPIOAEN;
+	RCC_AHB1ENR |= GPIOAEN;
     /* Set the GPIOA Pin mode using the mode register */
-    GPIOA->MODER |= (1U<<10);
-    GPIOA->MODER &= ~(1U<<11);
+	GPIOA_MODER |= (1U<<10);
+	GPIOA_MODER &= ~(1U<<11);
 
 	while(1)
 	{
@@ -101,10 +75,12 @@ int main()
 		//GPIOA_ODR |= LED_PIN;
 
 		/* Toggle the LED by XORing */
-		GPIOA->ODR ^= LED_PIN;
+		GPIOA_ODR ^= LED_PIN;
 		/* generate an artificial delay in order to view toggling */
 		for(int i= 0 ; i< 1000000 ; i ++ ) {}
+
 	}
+
 	return 0;
 }
 
