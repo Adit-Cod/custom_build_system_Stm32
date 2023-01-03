@@ -1,0 +1,2 @@
+arm-none-eabi-objdump -h startup_stm32f446re.o  --> to get the dump of the object file
+arm-none-eabi-gcc -c startup_stm32f446re.c -o startup_stm32f446re.o --> to compile into object code
