@@ -1,5 +1,5 @@
 /******************************************************************************
-*****     	CUSTOM STARTUP FILE  									      *****
+*****     	              CUSTOM STARTUP FILE  							  *****
 ******************************************************************************/
 /*!
 ***     \file       startup_stm32f446re.c
@@ -31,13 +31,18 @@
 /*=============================================================================
 =======               DEFINES & MACROS FOR GENERAL PURPOSE              =======
 =============================================================================*/
-
+/* Variables or global symbols Used in linker file to capture important addresses! */
 extern uint32_t _estack;
-
+extern uint32_t _etext;
+extern uint32_t _sdata;
+extern uint32_t _edata;
+extern uint32_t _sbss;
+extern uint32_t _ebss;
 /*=============================================================================
 =======                       PRIVATE FUNCTION DECLARATIONS             =======
 =============================================================================*/
-void Reset_Handler(void);
+extern int main();
+void reset_Handler(void);
 void Default_Handler(void);
 void NMI_Handler           (void)__attribute__((weak,alias("Default_Handler")));
 void HardFault_Handler     (void)__attribute__((weak,alias("Default_Handler")));
@@ -134,6 +139,8 @@ void HDMI_CEC_IRQHandler    (void)__attribute__((weak,alias("Default_Handler")))
 void SPDIF_Rx_IRQHandler    (void)__attribute__((weak,alias("Default_Handler")));
 void FMPI2C1_IRQHandler     (void)__attribute__((weak,alias("Default_Handler")));
 void FMPI2C1_ER_IRQHandler  (void)__attribute__((weak,alias("Default_Handler")));
+
+
 /*=============================================================================
 =======                       CONSTANTS  &  TYPES                       =======
 =============================================================================*/
@@ -147,7 +154,7 @@ void FMPI2C1_ER_IRQHandler  (void)__attribute__((weak,alias("Default_Handler")))
 uint32_t vector_tbl[] __attribute__((section(".isr_vector_tbl")))={
 	
 	(uint32_t)&_estack,
-	(uint32_t)&Reset_Handler,
+	(uint32_t)&reset_Handler,
 	(uint32_t)&NMI_Handler,
 	(uint32_t)&HardFault_Handler,
 	(uint32_t)&MemManage_Handler,
@@ -280,14 +287,34 @@ uint32_t vector_tbl[] __attribute__((section(".isr_vector_tbl")))={
  *     \warning
  *     Startup File: Execute startup relevant code.
  *//*------------------------------------------------------------------------*/
-void Reset_Handler(void)
+void reset_Handler(void)
 {
 	/* NOTE
 	   One of the tasks of reset handler would be to copy the .data section from flash to SRAM 
 	   In order to pinpoint the actual address of the .data section in the flash memory; linker symbols 
 	   are used
 	*/
+	/* Hold the size of data section in flash*/
+	uint32_t data_MemSize_ui32 = (uint32_t)_edata - (uint32_t)_sdata;
+	uint32_t bss_MemSize_ui32  = (uint32_t)_ebss  - (uint32_t)_sbss;
 	
+	uint32_t *srcMem_p  = (uint32_t *)&_etext;
+    uint32_t *destMem_p = (uint32_t *)&_sdata;
+	
+	for(uint32_t i = 0 ; i< data_MemSize_ui32 ; i++)
+	{
+		/* Copy Data Section from FLASH to SRAM */
+		*destMem_p++ = *srcMem_p++;
+	}
+	destMem_p = (uint32_t *)&_sbss;
+	
+	for(uint32_t i = 0; i < bss_MemSize_ui32 ; i ++)
+	{
+		/* Set BSS section of the memory to 0 */
+		*destMem_p++ = 0;
+	}
+	
+	main();
 	
 }
 
