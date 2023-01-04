@@ -10,3 +10,7 @@ arm-none-eabi-gcc -c -mcpu=cortex-m4 -mthumb -std=gnu11 startup_stm32f446re.c -o
 
 /* FLASHING ON TO THE BOARD */
 openocd -f board/st_nucleo_f4.cfg 
+on teraterm using telnet type the following 
+reset init
+flash write_image erase stm32_blinker.elf
+reset init
