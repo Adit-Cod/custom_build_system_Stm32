@@ -1,0 +1,16 @@
+arm-none-eabi-objdump -h startup_stm32f446re.o  --> to get the dump of the object file
+arm-none-eabi-gcc -c startup_stm32f446re.c -o startup_stm32f446re.o --> to compile into object code
+arm-none-eabi-gcc -nostdlib -T stm32_ls.ld main.o startup_stm32f446re.o -o stm32_blinker.elf --> To link the object files and convert it into the ELF Format. 
+arm-none-eabi-gcc -nostdlib -T stm32_ls.ld main.o startup_stm32f446re.o -o stm32_blinker.elf -Wl,-Map=stm32_blinker.map
+
+
+/* BUILD COMMANDS FOR ARM CM4 */
+arm-none-eabi-gcc -c -mcpu=cortex-m4 -mthumb -std=gnu11 main.c -o main.o
+arm-none-eabi-gcc -c -mcpu=cortex-m4 -mthumb -std=gnu11 startup_stm32f446re.c -o startup_stm32f446re.o
+
+/* FLASHING ON TO THE BOARD */
+openocd -f board/st_nucleo_f4.cfg 
+on teraterm using telnet type the following 
+reset init
+flash write_image erase stm32_blinker.elf
+reset init
