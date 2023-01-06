@@ -1,0 +1,22 @@
+/*
+ * ADC_Driver.c
+ *
+ *  Created on: Jan 6, 2023
+ *      Author: User
+ */
+
+#include "ADC_Driver.h"
+
+#define ADC1_ENABLE  (1U<<8)
+
+
+
+void PA1_ADC_Init(void)
+{
+	/* Enable Clock Access to ADC peripheral
+	 * Enable Clock Access to respective GPIO
+	 * Set correct Alternate Function mode from data sheet*/
+
+}
+
+

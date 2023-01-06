@@ -1,0 +1,39 @@
+/*
+ * ADC_Driver.c
+ *
+ *  Created on: Jan 6, 2023
+ *      Author: User
+ */
+
+#include "ADC_Driver.h"
+#include "stm32f446xx.h"
+
+#define ADC1_ENABLE   (1U<<8)
+#define GPIOAEN       (1U<<0)
+#define ADC_CH1       (1U<<0)
+#define ADC_SEQ_LEN_1  0x00
+#define ADC_CR2_AD_ON  (1U<<0)
+
+void PA1_ADC_Init(void)
+{
+	/* Enable Clock Access to ADC peripheral
+	 * Enable Clock Access to respective GPIO
+	 * Set correct Alternate Function mode from data sheet
+	 * follow by configuring the ADC parameters
+	 * */
+
+    RCC->AHB1ENR |= GPIOAEN;
+    /* Setting pin 1 as analog employing Alternate Function mode of the pin */
+    GPIOA->MODER |= (1U<<2);
+    GPIOA->MODER |= (1U<<3);
+    /* Provide clock access to the ADC peripheral */
+    RCC->APB2ENR |= ADC1_ENABLE;
+    /* Configure the ADC parameters */
+    ADC1->SQR3 |= ADC_CH1;
+
+
+
+
+}
+
+

@@ -1,0 +1,97 @@
+/*
+ * USART_Main_Control.c
+ *
+ *  Created on: Aug 25, 2022
+ *      Author: User
+ */
+
+#include "USART_Main_Control.h"
+#include <stdio.h>
+
+typedef struct
+{
+
+	__IO uint32_t MODER;
+	__IO uint32_t OTYPER;
+	__IO uint32_t OSPEEDR;
+	__IO uint32_t PUPDR;
+	__IO uint32_t IDR;
+	__IO uint32_t ODR;
+	__IO uint32_t BSRR;
+	__IO uint32_t LCKR;
+	__IO uint32_t AFR[2];
+}GPIO_TypeDef;
+
+typedef struct
+{
+	/* Other structure elements are not mentioned here as only AHB1ENR is accessed. Populate this structure
+	 * as and when application demands it! */
+	__IO uint32_t DUMMY[12];
+	__IO uint32_t AHB1ENR;
+}RCC_TypeDef;
+
+#define RCC    ((RCC_TypeDef *)RCCPERIPHERAL_BASE)
+#define GPIOA  ((GPIO_TypeDef*)GPIOAPERIPHERAL_BASE)
+
+void USART2_Init(void)
+{
+	GPIO_InitTypeDef  GPIO_InitStruct;
+	USART_InitTypeDef USART_InitStruct;
+
+	memset(&GPIO_InitStruct,0,sizeof(GPIO_InitStruct));
+	memset(&USART_InitStruct,0,sizeof(USART_InitStruct));
+	 // Populate the GPIO structure
+	GPIO_InitStruct.GPIO_Pin   =  GPIO_Pin_2 | GPIO_Pin_3;
+	GPIO_InitStruct.GPIO_Mode  =  GPIO_Mode_AF;
+	GPIO_InitStruct.GPIO_PuPd  =  GPIO_PuPd_UP;
+	// Populate the USART structure
+	USART_InitStruct.USART_BaudRate             = 115200;
+	USART_InitStruct.USART_Mode                 = USART_Mode_Tx | USART_Mode_Rx ;
+	USART_InitStruct.USART_HardwareFlowControl  = USART_HardwareFlowControl_None;
+	USART_InitStruct.USART_Parity               = USART_Parity_No;
+	USART_InitStruct.USART_StopBits             = USART_StopBits_1;
+	USART_InitStruct.USART_WordLength           = USART_WordLength_8b;
+
+	/* 1.  Enable the USART2 and GPIOA peripheral clock */
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA,ENABLE);
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2,ENABLE);
+
+	/* 2. PA2 is UART2_Tx and PA3 is UART2_Rx when appropriately configured in
+	* Alternate Function Register of Pin */
+	/* Pin Alternate Configuration */
+	GPIO_Init(GPIOA, &GPIO_InitStruct);
+	/* pin 2 is Tx */
+	GPIO_PinAFConfig(GPIOA,GPIO_PinSource2,GPIO_AF_USART2);
+	/* Pin 3 is Rx */
+	GPIO_PinAFConfig(GPIOA,GPIO_PinSource3,GPIO_AF_USART2);
+
+	/* Initialize Uart Engine */
+	USART_Init(USART2, &USART_InitStruct);
+
+	USART_Cmd(USART2,ENABLE);
+}
+
+ void debugTraceInfo(char *msg)
+{
+   for(uint32_t i = 0 ; i < strlen(msg) ; i++)
+   {
+	   while(USART_GetFlagStatus(USART2,USART_FLAG_TXE) != SET );
+	   USART_SendData(USART2,msg[i]);
+   }
+}
+
+
+ struct __FILE { int handle; };
+ FILE __stdin  = {0};
+ FILE __stdout = {1};
+ FILE __stderr = {2};
+
+ /* Called by C library console/file output */
+ int fputc(int c, FILE *f)
+ {
+	  while(USART_GetFlagStatus(USART2,USART_FLAG_TXE) != SET );
+      USART_SendData(USART2,c);  /* write the character to console */
+      return 0;
+ }
+
+

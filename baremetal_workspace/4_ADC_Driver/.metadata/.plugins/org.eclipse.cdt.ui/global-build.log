@@ -1,0 +1,20 @@
+12:29:59 **** Incremental Build of configuration Debug for project 04_ADC_Tester ****
+make -j12 all 
+Building file: ../src/main.c
+Invoking: MCU GCC Compiler
+C:\Ad_Docs\Embedded Systems\custom_build_system_Stm32\custom_build_system_Stm32\baremetal_workspace\4_ADC_Driver\04_ADC_Tester\Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -DDEBUG -DSTM32F446xx -DUSE_STDPERIPH_DRIVER -I"C:/Ad_Docs/Embedded Systems/custom_build_system_Stm32/custom_build_system_Stm32/baremetal_workspace/4_ADC_Driver/04_ADC_Tester/StdPeriph_Driver/inc" -I"C:/Ad_Docs/Embedded Systems/custom_build_system_Stm32/custom_build_system_Stm32/baremetal_workspace/4_ADC_Driver/04_ADC_Tester/inc" -I"C:/Ad_Docs/Embedded Systems/custom_build_system_Stm32/custom_build_system_Stm32/baremetal_workspace/4_ADC_Driver/04_ADC_Tester/CMSIS/device" -I"C:/Ad_Docs/Embedded Systems/custom_build_system_Stm32/custom_build_system_Stm32/baremetal_workspace/4_ADC_Driver/04_ADC_Tester/CMSIS/core" -I"C:/Ad_Docs/Embedded Systems/custom_build_system_Stm32/custom_build_system_Stm32/baremetal_workspace/4_ADC_Driver/04_ADC_Tester/Drivers" -O0 -g3 -Wall -fmessage-length=0 -ffunction-sections -c -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+Finished building: ../src/main.c
+ 
+Building target: 04_ADC_Tester.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -T"C:/Ad_Docs/Embedded Systems/custom_build_system_Stm32/custom_build_system_Stm32/baremetal_workspace/4_ADC_Driver/04_ADC_Tester/LinkerScript.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "04_ADC_Tester.elf" @"objects.list"   -lm
+Finished building target: 04_ADC_Tester.elf
+ 
+make --no-print-directory post-build
+Generating binary and Printing size information:
+arm-none-eabi-objcopy -O binary "04_ADC_Tester.elf" "04_ADC_Tester.bin"
+arm-none-eabi-size "04_ADC_Tester.elf"
+   text	   data	    bss	    dec	    hex	filename
+  24168	   2508	   1408	  28084	   6db4	04_ADC_Tester.elf
+ 
